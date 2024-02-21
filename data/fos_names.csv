@@ -1,0 +1,76 @@
+symb,name
+CS002,Ablabesmyia
+CSX01,"Chironomini,1st,instar"
+CSX02,"chironomini,undiff"
+CS004,Chironomus anthracinus-type
+CS005,Chironomus plumosus-type
+CS006,Cladopelma group
+CS007,Cladotanytarsus mancus-type
+CS008,Constempellina-Thienemanniola
+CS009,Corynocera ambigua
+CS011,Corynoneura arctica-type
+CS013,Corynoneura cornata-type
+CS014,Corynoneura edwardsi-type
+CS016,Corynoneura type A
+CSX03,"Corynoneura,undiff"
+CS017,Cricotopus bicinctus-type
+CS018,Cricotopus cylindraceus-type
+CS019,Cricotopus intersectus_laricomalis group
+CSX04,Cricotopus/Orthocladius
+CS024,Cryptochironomus
+CSX05,Demicryptochironomus
+CS029,Dicrotendipes group
+CS031,Einfeldia group
+CS032,Endochironomus albipensis-type
+CS033,Endochironomus impar-type
+CS034,Endochironomus tendes-type
+CS036,Glyptotendipes barbipes-type
+CS037,Glyptotendipes pallens_severini
+CSX13,Krenosmittia
+CS051,Lauterborniella_Zavreliella group
+CS052,Limnophyes
+CS055,Metriocnemus eurynotus-type
+CS056,Microchironomus
+CS057,Micropsectra insignilobus_contracta group
+CSX06,"Micropsectra,undiff"
+CS061,Microtendipes group
+CS064,Nanocladius branchicolus-type
+CS065,Nanocladius rectinervis-type
+CSX07,"Orthocladiinae,undiff"
+CS072,Parachironomus varus-type
+CS074,Paracladius
+CS077,Parakiefferiella bathophila-type
+CS080,Parakiefferiella triquetra-type
+CS081,Parakiefferiella type A
+CS082,Paramerina
+CS086,Paratanytarsus penicillatus-type
+CSX08,"Paratanytarsus,undiff"
+CS087,Paratendipes albimanus-type
+CS088,Paratendipes nudisquama-type
+CS090,Phaenopsectra flavipes-type
+CS091,Phaenopsectra type A
+CS094,Polypedilum nubeculosum_nubifer group
+CS095,Polypedilum sordens-type
+CS096,Procladius
+CS100,Psectrocladius barbatipes-type
+CS102,Psectrocladius psilopterus-type
+CS104,Psectrocladius sordidellus_semicircularis group
+CS105,Pseudochironomus
+CS111,Rheotanytarsus
+CS112,Sergentia coracina-type
+CS114,Stempellina-type
+CS115,Stempellinella-Zavrelia
+CS116,Stenochironomus
+CS117,Stictochironomus rosenschoeldi-type
+CSX09,"Tanypodinae,undiff"
+CS119,Tanypus
+CSX10,"Tanytarsini,undiff"
+CS120,Tanytarsus chinyensis group
+CS121,Tanytarsus glabrescens-type
+CS122,Tanytarsus lactescens-type
+CS123,Tanytarsus lugens-type
+CS124,Tanytarsus mendax group
+CS125,Tanytarsus pallidicornis group
+CS126,Thienemannimyia-type
+CS129,Tribelos
+CSX11,Xenochironomus

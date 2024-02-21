@@ -1,1 +1,1 @@
-# methods_of_climate_reconstruction_classes
+# Repository for classes in methods of climate reconstruction containing all scripts and datasets
