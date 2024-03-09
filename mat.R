@@ -6,11 +6,11 @@ library(palaeoSig)
 library(patchwork)
 library(tidypaleo)
 library(svglite)
-dat <- readRDS("data/chiro_dat_spore_kusowo.rds")
-age <- dat$age
-depth <- dat$depth
+dat <- readRDS("data/chiro_dat_spore_kusowo.rds") #load data
+age <- dat$age #extract age
+depth <- dat$depth #extract depth
 
-fos_names <- read_csv("data/fos_names.csv")
+fos_names <- read_csv("data/fos_names.csv") #load full names 
 
 fos_prep <- dat$fossils
 names(fos_prep) <- fos_names$name
@@ -37,9 +37,9 @@ spp <- ns_ts %>%
 
 ns_ts_temp <- ns_ts$July.temp
 
-fit <- mat(spp/100, ns_ts_temp, method = "SQchord", kmax =15)
+fit <- mat(spp/100, ns_ts_temp, method = "SQchord", kmax =15) #modern analogue technique transfer function
 
-screeplot(fit)
+screeplot(fit) #select optimal k
 
 spp_names_mat <- names(spp)
 fos_names_mat <- names(fos)
@@ -50,11 +50,25 @@ fos[,cols_to_add] <- 0
 fos_mat <- fos %>% 
   select(sort(names(fos)))
 
+names(spp) %in% names(fos_mat) #all names should match in both datasets
 
-names_to_marge <- spp %>% 
-  all_of(fos_names_mat)
-
-pred_mat <- predict(fit, fos_mat/100, k =3, bootstrap = TRUE, n.boot = 100)
+pred_mat <- predict(fit, fos_mat/100, k =7, bootstrap = TRUE, n.boot = 100) #jaki wplyw ma zmiana parametru k?
 
 reconPlot(pred_mat, depths = age, use.labels = TRUE, ylab = "CIT", xlab = "Age (yr BP)", 
           display.error = "bars", predictions = "bootstrap")
+
+pred_mat_min_dis <- predict(fit, fos_mat/100)
+min_dis <- minDC(pred_mat_min_dis) #extract minium dissimilarity between fos and spp
+
+plot(min_dis, age, use.labels = TRUE, xlab = "Age (years BP)")
+
+
+ca <- cca(spp~ns_ts_temp)
+plot(ca, display = "sites")
+
+rlen <- residLen(spp, ns_ts_temp, fos_mat, method="cca")
+
+plot(age, rlen$passive, ylab="Squared residual length", xlab="age", type = "b")
+abline(h=quantile(rlen$train, probs = c(0.9,0.95)), col=c("orange", "red"))
+rlen.probs <- quantile(rlen$train, probs = c(0.9,0.95))
+
