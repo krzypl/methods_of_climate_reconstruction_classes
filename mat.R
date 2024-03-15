@@ -57,6 +57,8 @@ pred_mat <- predict(fit, fos_mat/100, k =7, bootstrap = TRUE, n.boot = 100) #jak
 reconPlot(pred_mat, depths = age, use.labels = TRUE, ylab = "CIT", xlab = "Age (yr BP)", 
           display.error = "bars", predictions = "bootstrap")
 
+plot(dat$age, dat$CIT_original, type = "l", xlim = rev(range(dat$age)))
+
 pred_mat_min_dis <- predict(fit, fos_mat/100)
 min_dis <- minDC(pred_mat_min_dis) #extract minium dissimilarity between fos and spp
 
