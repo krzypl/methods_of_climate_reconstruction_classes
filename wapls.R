@@ -1,11 +1,7 @@
-library(analogue)
 library(rioja)
-library(vegan)
 library(tidyverse)
-library(palaeoSig)
-library(patchwork)
-library(tidypaleo)
-library(svglite)
+
+#data preparation
 dat <- readRDS("data/chiro_dat_spore_kusowo.rds") #load data
 age <- dat$age #extract age
 depth <- dat$depth #extract depth
@@ -37,40 +33,29 @@ spp <- ns_ts %>%
 
 ns_ts_temp <- ns_ts$July.temp
 
-spp_names_mat <- names(spp)
-fos_names_mat <- names(fos)
-cols_to_add <- names(spp[!names(spp) %in% fos_names_mat])
+spp_names_wapls <- names(spp)
+fos_names_wapls <- names(fos)
+cols_to_add <- names(spp[!names(spp) %in% fos_names_wapls])
 
 fos[,cols_to_add] <- 0
 
-fos_mat <- fos %>% 
+fos_wapls <- fos %>% 
   select(sort(names(fos)))
 
-names(spp) %in% names(fos_mat) #all names should match in both datasets
+names(spp) %in% names(fos_wapls) #all names should match in both datasets
 
-fit <- mat(spp/100, ns_ts_temp, method = "SQchord", kmax =15) #modern analogue technique transfer function
+#reconstruction
 
-screeplot(fit) #select optimal k
+fit <- WAPLS(spp, ns_ts_temp)
+fit #this is a model performance; we need a prediction performance, and thus run a cross validation (cv)
+fit.cv <- crossval(fit, cv.method="loo")
+fit.cv
 
-pred_mat <- predict(fit, fos_mat/100, k =7, bootstrap = TRUE, n.boot = 100) #jaki wplyw ma zmiana parametru k?
+rand.t.test(fit.cv)
+screeplot(fit.cv)
 
-reconPlot(pred_mat, depths = age, use.labels = TRUE, ylab = "CIT", xlab = "Age (yr BP)", 
-          display.error = "bars", predictions = "bootstrap")
+#predict the core
+pred <- predict(fit, fos_wapls)
 
-plot(dat$age, dat$CIT_original, type = "l", xlim = rev(range(dat$age)))
-
-pred_mat_min_dis <- predict(fit, fos_mat/100)
-min_dis <- minDC(pred_mat_min_dis) #extract minium dissimilarity between fos and spp
-
-plot(min_dis, age, use.labels = TRUE, xlab = "Age (years BP)")
-
-
-ca <- cca(spp~ns_ts_temp)
-plot(ca, display = "sites")
-
-rlen <- residLen(spp, ns_ts_temp, fos_mat, method="cca")
-
-plot(age, rlen$passive, ylab="Squared residual length", xlab="age", type = "b")
-abline(h=quantile(rlen$train, probs = c(0.9,0.95)), col=c("orange", "red"))
-rlen.probs <- quantile(rlen$train, probs = c(0.9,0.95))
-
+plot(age, pred$fit[, 2], type="b", ylab="C-IT", las=1)
+lines(age, dat$CIT_original, col = "red")
