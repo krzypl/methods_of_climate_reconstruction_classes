@@ -6,6 +6,8 @@ library(palaeoSig)
 library(patchwork)
 library(tidypaleo)
 library(svglite)
+
+#data preparation --------
 dat <- readRDS("data/chiro_dat_spore_kusowo.rds") #load data
 age <- dat$age #extract age
 depth <- dat$depth #extract depth
@@ -24,9 +26,13 @@ fos <- fos_prep %>%
   select(!c(`Chironomini,1st,instar`, `chironomini,undiff`, `Corynoneura,undiff`, `Cricotopus bicinctus-type`,
             `Cricotopus/Orthocladius`, `Micropsectra,undiff`, `Orthocladiinae,undiff`, `Parakiefferiella triquetra-type`,
             `Paratanytarsus,undiff`, `Tanypodinae,undiff`, `Tanytarsini,undiff`, `Tribelos`,
-            `Cryptochironomus`, `Demicryptochironomus`, `Glyptotendipes barbipes-type`, `Glyptotendipes pallens_severini`))
+            `Cryptochironomus`, `Demicryptochironomus`, `Glyptotendipes barbipes-type`, `Glyptotendipes pallens_severini`)) %>% 
+  select(sort(names(.)))
+  
 
 harmonized_names <- read_csv("data/harmonized_names.csv")
+
+
 
 names(fos) <- harmonized_names$short_name
 
@@ -47,6 +53,8 @@ fos_mat <- fos %>%
   select(sort(names(fos)))
 
 names(spp) %in% names(fos_mat) #all names should match in both datasets
+
+#reconstruction --------------
 
 fit <- mat(spp/100, ns_ts_temp, method = "SQchord", kmax =15) #modern analogue technique transfer function
 

@@ -48,7 +48,7 @@ names(spp) %in% names(fos_wapls) #all names should match in both datasets
 
 fit <- WAPLS(spp, ns_ts_temp)
 fit #this is a model performance; we need a prediction performance, and thus run a cross validation (cv)
-fit.cv <- crossval(fit, cv.method="loo")
+fit.cv <- rioja::crossval(fit, cv.method="loo")
 fit.cv
 
 rand.t.test(fit.cv)
